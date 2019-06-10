@@ -2,19 +2,20 @@ package com.example.popular_movies_stage2.database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 @Entity(tableName = "favMovies")
 public class Movie {
 
     @PrimaryKey
-    private String movieId;
+    @NonNull private String movieId;
     private String movieName;
     private String posterPath;
     private String rating;
     private String releaseDate;
     private String description;
 
-    public Movie(String movieId, String movieName, String posterPath,
+    public Movie(@NonNull String movieId, String movieName, String posterPath,
                  String rating, String releaseDate, String description) {
         this.movieId = movieId;
         this.movieName = movieName;

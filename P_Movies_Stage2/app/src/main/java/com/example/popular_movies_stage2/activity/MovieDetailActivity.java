@@ -114,7 +114,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .movieDao();
         dao.deleteMovie(dao.getMovie(mMovie.getmMovieId()).get(0));
 
-        
+        mFavouritesButton.setText(getString(R.string.activity_details_favourites));
     }
 
     private boolean checkIfMovieIsFavorite() {
@@ -149,6 +149,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         MovieDao dao = AppDatabase.getInstance(getApplicationContext())
                 .movieDao();
         dao.insertMovieDetails(dbMovie);
+
+        mFavouritesButton.setText("Remove from favorites");
 
         Toast.makeText(this, "Movie added to favorites", Toast.LENGTH_SHORT).show();
     }
