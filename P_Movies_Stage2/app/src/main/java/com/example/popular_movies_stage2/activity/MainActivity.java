@@ -17,12 +17,16 @@ import android.widget.Toast;
 
 import com.example.popular_movies_stage2.R;
 import com.example.popular_movies_stage2.adapter.GridAdapter;
+import com.example.popular_movies_stage2.database.AppDatabase;
+import com.example.popular_movies_stage2.database.MovieDao;
 import com.example.popular_movies_stage2.model.Movie;
 import com.example.popular_movies_stage2.model.MovieResult;
 import com.example.popular_movies_stage2.retrofit.MovieService;
 import com.example.popular_movies_stage2.retrofit.RetrofitInstance;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
     final static String POPULAR = "popular";
 
     final static String TOP_RATED = "top_rated";
-
+    //store movies retrieved from api call
     public List<Movie> movieList = new ArrayList<Movie>();
+
     GridAdapter movieAdapter;
+
     private ProgressBar movieProgressBar;
 
     private MovieService mMovieService;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,16 +90,43 @@ public class MainActivity extends AppCompatActivity {
 
         if(item.getItemId() == R.id.popular) {
             getMovies(POPULAR);
-
         } else if (item.getItemId() == R.id.top_rated) {
 //            Toast toast = Toast.makeText(getApplicationContext(), "Item 2 clicked", Toast.LENGTH_SHORT);
 //            toast.show();
             getMovies(TOP_RATED);
         } else if (item.getItemId() == R.id.favourites) {
+            fetchFavMoviesFromDb();
             Toast toast = Toast.makeText(getApplicationContext(), "Favourites clicked", Toast.LENGTH_SHORT);
             toast.show();
 
         }
+    }
+
+    private void fetchFavMoviesFromDb() {
+        //fetch fav movies from Db
+        MovieDao dao = AppDatabase.getInstance(getApplicationContext())
+                .movieDao();
+
+        //copy DbMovie data object to Model movie obj that is passed to adapter
+        List<com.example.popular_movies_stage2.database.Movie> dbMovieList = dao.loadAllMovies();
+        List<Movie> favMovies = new ArrayList<>();
+
+        for (com.example.popular_movies_stage2.database.Movie dbMovie : dbMovieList) {
+            favMovies.add(new Movie(dbMovie.getMovieName(),
+                    dbMovie.getPosterPath(),
+                    dbMovie.getMovieId(),
+                    dbMovie.getDescription(),
+                    dbMovie.getRating(),
+                    dbMovie.getReleaseDate()));
+        }
+
+        if (favMovies.size() > 0) {
+            movieList.clear();
+            movieList.addAll(favMovies);
+
+            movieAdapter.notifyDataSetChanged();
+        }
+
     }
 
     @Override
