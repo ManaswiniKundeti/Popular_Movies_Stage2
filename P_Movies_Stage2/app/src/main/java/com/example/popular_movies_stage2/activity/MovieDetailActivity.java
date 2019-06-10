@@ -2,6 +2,7 @@ package com.example.popular_movies_stage2.activity;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.example.popular_movies_stage2.R;
 import com.example.popular_movies_stage2.adapter.ListAdapter;
+import com.example.popular_movies_stage2.database.AppDatabase;
+import com.example.popular_movies_stage2.database.MovieDao;
 import com.example.popular_movies_stage2.model.Movie;
 import com.example.popular_movies_stage2.model.MovieReview;
 import com.example.popular_movies_stage2.model.MovieReviewResults;
@@ -50,6 +53,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     ListAdapter mListAdapter;
 
     List<MovieReviewResults> reviewResultList  = new ArrayList<>();
+
+    private Movie mMovie = null;
 
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
     @SuppressLint("ClickableViewAccessibility")
@@ -90,6 +95,62 @@ public class MovieDetailActivity extends AppCompatActivity {
             getReviews(movieId);
         }
 
+        mFavouritesButton.setEnabled(false);
+        mFavouritesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkIfMovieIsFavorite()) {
+                    unfavoriteMovie();
+                } else {
+                    favoriteMovie();
+                }
+            }
+        });
+
+    }
+
+    private void unfavoriteMovie() {
+        MovieDao dao = AppDatabase.getInstance(getApplicationContext())
+                .movieDao();
+        dao.deleteMovie(dao.getMovie(mMovie.getmMovieId()).get(0));
+
+        
+    }
+
+    private boolean checkIfMovieIsFavorite() {
+        if (mMovie == null) {
+            return false;
+        }
+
+        MovieDao dao = AppDatabase.getInstance(getApplicationContext())
+                .movieDao();
+        List<com.example.popular_movies_stage2.database.Movie> movieList = dao.getMovie(mMovie.getmMovieId());
+        if (movieList == null || movieList.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void favoriteMovie() {
+        if (mMovie == null) {
+            return;
+        }
+
+        com.example.popular_movies_stage2.database.Movie dbMovie = new com.example.popular_movies_stage2.database.Movie(
+                mMovie.getmMovieId(),
+                mMovie.getmMovieName(),
+                mMovie.getmMovieImageUri(),
+                mMovie.getmRating(),
+                mMovie.getmReleaseDate(),
+                mMovie.getmSummary()
+        );
+
+        MovieDao dao = AppDatabase.getInstance(getApplicationContext())
+                .movieDao();
+        dao.insertMovieDetails(dbMovie);
+
+        Toast.makeText(this, "Movie added to favorites", Toast.LENGTH_SHORT).show();
     }
 
     private void getMovie(final String movieId) {
@@ -102,7 +163,8 @@ public class MovieDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Movie movie = response.body();
+                    final Movie movie = response.body();
+                    mMovie = movie;
 
                     Picasso.get()
                             .load(Uri.parse("https://image.tmdb.org/t/p/w500" + movie.getmMovieImageUri()))
@@ -111,6 +173,10 @@ public class MovieDetailActivity extends AppCompatActivity {
                     mSummaryTextView.setText(movie.getmSummary());
                     mRatingTextView.setText(movie.getmRating());
                     mReleaseDateTextView.setText(movie.getmReleaseDate());
+                    mFavouritesButton.setEnabled(true);
+                    if (checkIfMovieIsFavorite()) {
+                        mFavouritesButton.setText("Remove from favorites");
+                    }
                 }
             }
 

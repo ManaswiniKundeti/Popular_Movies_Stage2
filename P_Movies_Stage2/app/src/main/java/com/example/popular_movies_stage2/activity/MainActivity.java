@@ -2,6 +2,7 @@ package com.example.popular_movies_stage2.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -89,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
 //            Toast toast = Toast.makeText(getApplicationContext(), "Item 2 clicked", Toast.LENGTH_SHORT);
 //            toast.show();
             getMovies(TOP_RATED);
+        } else if (item.getItemId() == R.id.favourites) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Favourites clicked", Toast.LENGTH_SHORT);
+            toast.show();
+
         }
     }
 
