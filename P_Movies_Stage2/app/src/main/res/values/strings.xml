@@ -9,4 +9,7 @@
     <string name="menu_top_rated_movies">Top rated movies</string>
     <string name="activity_details_favourites">Add to Favourites</string>
     <string name="menu_favourite_movies">Favourite Movies</string>
+    <string name="Trailer_1">Trailer1</string>
+    <string name="Trailer_2_button">Trailer2Button</string>
+    <string name="Trailer_1_button">Trailer1Button</string>
 </resources>

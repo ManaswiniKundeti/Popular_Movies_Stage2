@@ -125,27 +125,66 @@
             android:textSize="18sp"
             tools:text="This is some random description for a movie!!"/>
 
-        <TextView
-            android:id="@+id/movie_detail_trailer1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="50dp"
-            android:autoLink="web"
-            tools:text="Default trailer1 link"
-            android:text="TRAILER 1"
-            android:visibility="visible"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
-        <TextView
-            android:id="@+id/movie_detail_trailer2"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/trailer1_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"
+                tools:text="Trailer1"
+                android:text="@string/Trailer_1_button"
+                android:drawableLeft="@drawable/ic_trailers"
+                android:padding="15dp"/>
+
+            <TextView
+                android:id="@+id/movie_detail_trailer1"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:autoLink="web"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="TRAILER 1"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:text="Default trailer1 link" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="50dp"
-            android:autoLink="web"
-            tools:text="Default trailer2 link"
-            android:text="TRAILER 2"
-            android:visibility="visible"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/trailer2_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"
+                tools:text="Trailer1"
+                android:drawableLeft="@drawable/ic_trailers"
+                android:text="@string/Trailer_2_button"
+                android:padding="15dp"/>
+
+            <TextView
+                android:id="@+id/movie_detail_trailer2"
+                android:layout_width="180dp"
+                android:layout_height="48dp"
+                android:autoLink="web"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="TRAILER 2"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:text="Default trailer2 link" />
+        </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"

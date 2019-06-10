@@ -2,7 +2,6 @@ package com.example.popular_movies_stage2.activity;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,8 +42,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView mSummaryTextView;
     private TextView mRatingTextView;
     private TextView mReleaseDateTextView;
-    private TextView mTrailer1TextView;
-    private TextView mTrailer2TextView;
+    private Button mTrailer1Button;
+    private Button mTrailer2Button;
 
     private Button mFavouritesButton;
 
@@ -69,8 +68,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         mSummaryTextView = findViewById(R.id.movie_detail_summary);
         mRatingTextView = findViewById(R.id.movie_detail_rating);
         mReleaseDateTextView = findViewById(R.id.movie_detail_release_date);
-        mTrailer1TextView = findViewById(R.id.movie_detail_trailer1);
-        mTrailer2TextView = findViewById(R.id.movie_detail_trailer2);
+        mTrailer1Button = findViewById(R.id.trailer1_button);
+        mTrailer2Button = findViewById(R.id.trailer2_button);
         mFavouritesButton = findViewById(R.id.favourites_button);
 
         ListView movieListView = findViewById(R.id.movie_review_data_list_view);
@@ -221,7 +220,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                         try {
                             final String trailerKey = resultList.get(i).getmVideoKey();
                             if(i == 0){
-                                mTrailer1TextView.setOnClickListener(new View.OnClickListener() {
+                                mTrailer1Button.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         playTrailerOnClick(trailerKey);
@@ -229,7 +228,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                                 });
 
                             } else if( i == 1){
-                                mTrailer2TextView.setOnClickListener(new View.OnClickListener() {
+                                mTrailer2Button.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         playTrailerOnClick(trailerKey);
