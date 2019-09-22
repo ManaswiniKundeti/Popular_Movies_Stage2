@@ -13,9 +13,9 @@ The detail page for each movie provides users with trailer videos and reviews.
 ### Screenshots
 
 #### Screenshots on a phone
-![](./app/Phone1.png)
-![](./app/Phone2.png)
+![](./P_Movies_Stage2/Phone1.png)
+![](./P_Movies_Stage2/Phone2.png)
 
 
 #### Scereenshots on a tablet
-![](./app/Tablet1.png)
+![](./P_Movies_Stage2/Tablet1.png)
